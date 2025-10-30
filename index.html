@@ -1,123 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>Parks ePaper Display — 13in (1200×1600)</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap');
-  
-/* ===== Canvas & base ===== */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 1200px;          /* ePaper canvas */
-  height: 1600px;         /* ePaper canvas */
-  background: #f0f0f0;
-  color: #000;
-  font-family: 'Roboto', Arial, sans-serif;
-  -webkit-text-size-adjust: none;
-  overflow: hidden;        /* no scroll on device */
-}
-:root{
-  --cardBorder: 4px;
-  --graphGray: #d9d9d9;   /* shared gray for graphs & badges */
-}
-#page {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
+  <meta charset="utf-8" />
+  <title>Parks ePaper Display — 13in (1200×1600)</title>
 
-/* ===== Header ===== */
-#header {
-  background: #000;
-  color: #fff;
-  padding: 8px 14px;
-}
-#header-inner{ display:flex; align-items:center; gap:12px; }
-.header-left, .header-right{ width:100px; min-width:100px; }
-.header-left img{ width:100px; height:auto; display:block; }
-.header-title{ flex:1; text-align:center; line-height:1.2; }
-.header-title .main{ font-size:36px; font-weight:800; }
-.header-title .coords{ font-size:18px; font-weight:700; opacity:.95; }
+  <!-- Google Fonts (replace former @import) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;800&display=swap" rel="stylesheet">
 
-/* ===== Cards area + footer ===== */
-#cards-wrap{ flex:1; overflow:hidden; }
-.container{
-  padding:24px;
-  padding-bottom: 60px; /* reserve space above fixed footer */
-  display:flex; flex-direction:column; gap:12px;
-  box-sizing:border-box;
-}
-.section{
-  border: var(--cardBorder) solid #000;
-  background:#fff;
-  border-radius:8px;
-  padding:14px;
-  position:relative;
-  display:flex; flex-direction:column;
-}
-.card-title{
-  font-size:32px; font-weight:800;
-  background:#000; color:#fff;
-  padding:4px 8px; margin-bottom:8px; text-align:left;
-}
-.card-timestamp{ font-size:20px; color:#222; margin-top:6px; text-align:right; }
+  <style>
+  /* ===== Canvas & base ===== */
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 1200px;          /* ePaper canvas */
+    height: 1600px;         /* ePaper canvas */
+    background: #f0f0f0;
+    color: #000;
+    font-family: 'Roboto', Arial, sans-serif;
+    -webkit-text-size-adjust: none;
+    overflow: hidden;        /* no scroll on device */
+  }
+  :root{
+    --cardBorder: 4px;
+    --graphGray: #d9d9d9;   /* shared gray for graphs & badges */
+  }
+  #page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
-/* ===== Access Status ===== */
-#access-section{ display:flex; flex-direction:column; gap:8px; }
-#access-bar{
-  width:100%;
-  background: var(--graphGray);
-  color:#000;
-  display:flex; align-items:center; justify-content:center;
-  height:110px;             /* fixed for zero jiggle */
-  padding:0 16px; box-sizing:border-box;
-  font-size:72px; font-weight:800; line-height:1; white-space:nowrap; border-radius:6px;
-}
-#access-sub{ display:flex; justify-content:flex-start; gap:14px; font-size:22px; font-weight:700; text-align:left; }
+  /* ===== Header ===== */
+  #header {
+    background: #000;
+    color: #fff;
+    padding: 8px 14px;
+  }
+  #header-inner{ display:flex; align-items:center; gap:12px; }
+  .header-left, .header-right{ width:100px; min-width:100px; }
+  .header-left img{ width:100px; height:auto; display:block; }
+  .header-title{ flex:1; text-align:center; line-height:1.2; }
+  .header-title .main{ font-size:36px; font-weight:800; }
+  .header-title .coords{ font-size:18px; font-weight:700; opacity:.95; }
 
-/* ===== Alerts ===== */
-#alerts-badges{ display:flex; justify-content:center; gap:8px; margin-bottom:10px; }
-.badge-gray{ background: var(--graphGray); color:#000; font-weight:700; padding:3px 10px; border-radius:6px; display:inline-block; white-space:nowrap; }
-#alert-message{
-  text-align:center; font-size:24px; line-height:1.45; padding:0 10px 4px 10px; white-space:pre-line; word-break:break-word; hyphens:auto;
-}
+  /* ===== Cards area + footer ===== */
+  #cards-wrap{ flex:1; overflow:hidden; }
+  .container{
+    padding:24px;
+    padding-bottom: 60px; /* reserve space above fixed footer */
+    display:flex; flex-direction:column; gap:12px;
+    box-sizing:border-box;
+  }
+  .section{
+    border: var(--cardBorder) solid #000;
+    background:#fff;
+    border-radius:8px;
+    padding:14px;
+    position:relative;
+    display:flex; flex-direction:column;
+  }
+  .card-title{
+    font-size:32px; font-weight:800;
+    background:#000; color:#fff;
+    padding:4px 8px; margin-bottom:8px; text-align:left;
+  }
+  .card-timestamp{ font-size:20px; color:#222; margin-top:6px; text-align:right; }
 
-/* ===== Weather ===== */
-#weather-section .section-content{ display:flex; gap:16px; width:100%; }
-#weather-left{ flex:0 0 36%; display:flex; align-items:center; gap:12px; }
-#weather-icon{ width:110px; height:110px; }
-#tempF{ font-size:88px; font-weight:800; line-height:1; }
-#tempC{ font-size:44px; font-weight:800; line-height:1; }
-#weather-right{ flex:1; display:grid; grid-template-columns: 1fr 1fr; column-gap:18px; row-gap:2px; align-content:start; }
-.weather-line{ font-size:24px; font-weight:400; text-align:left; }
-#weather-source{ font-size:16px; text-align:right; color:#333; margin-top:4px; padding-right:6px; }
+  /* ===== Access Status ===== */
+  #access-section{ display:flex; flex-direction:column; gap:8px; }
+  #access-bar{
+    width:100%;
+    background: var(--graphGray);
+    color:#000;
+    display:flex; align-items:center; justify-content:center;
+    height:110px;             /* fixed for zero jiggle */
+    padding:0 16px; box-sizing:border-box;
+    font-size:72px; font-weight:800; line-height:1; white-space:nowrap; border-radius:6px;
+  }
+  #access-sub{ display:flex; justify-content:flex-start; gap:14px; font-size:22px; font-weight:700; text-align:left; }
 
-/* ===== Forecast (PoP 24h) ===== */
-#pop-title-wrap{ display:flex; justify-content:center; margin-bottom:8px; }
-#pop-graph{ width:1040px; height:240px; margin:0 auto; background:var(--graphGray); }
-.pop-axis-label{ font-size:16px; fill:#000; }
-.pop-bar-label{ font-size:16px; fill:#000; text-anchor:middle; }
+  /* ===== Alerts ===== */
+  #alerts-badges{ display:flex; justify-content:center; gap:8px; margin-bottom:10px; }
+  .badge-gray{ background: var(--graphGray); color:#000; font-weight:700; padding:3px 10px; border-radius:6px; display:inline-block; white-space:nowrap; }
+  #alert-message{
+    text-align:center; font-size:24px; line-height:1.45; padding:0 10px 4px 10px; white-space:pre-line; word-break:break-word; hyphens:auto;
+  }
 
-/* ===== AQI ===== */
-#aqi-content{ display:flex; flex-direction:column; align-items:center; gap:6px; }
-#aqi-class{ font-size:28px; font-weight:800; }
-#aqi-gauge{ margin-top:2px; }
-#aqi-value{ font-size:26px; font-weight:800; }
-#aqi-extra{ margin-top:6px; text-align:center; }
-#aqi-guidance{ font-size:22px; font-weight:600; color:#222; }
-#aqi-breakdown{ font-size:18px; color:#222; }
-#aqi-source{ font-size:16px; color:#444; text-align:right; }
+  /* ===== Weather ===== */
+  #weather-section .section-content{ display:flex; gap:16px; width:100%; }
+  #weather-left{ flex:0 0 36%; display:flex; align-items:center; gap:12px; }
+  #weather-icon{ width:110px; height:110px; }
+  #tempF{ font-size:88px; font-weight:800; line-height:1; }
+  #tempC{ font-size:44px; font-weight:800; line-height:1; }
+  #weather-right{ flex:1; display:grid; grid-template-columns: 1fr 1fr; column-gap:18px; row-gap:2px; align-content:start; }
+  .weather-line{ font-size:24px; font-weight:400; text-align:left; }
+  #weather-source{ font-size:16px; text-align:right; color:#333; margin-top:4px; padding-right:6px; }
 
-/* ===== Footer (fixed at bottom) ===== */
-#footer{
-  position:absolute; left:0; right:0; bottom:8px;
-  text-align:center; font-size:16px; color:#111; padding:0 24px;
-}
-</style>
+  /* ===== Forecast (PoP 24h) ===== */
+  #pop-title-wrap{ display:flex; justify-content:center; margin-bottom:8px; }
+  #pop-graph{ width:1040px; height:240px; margin:0 auto; background:var(--graphGray); }
+  .pop-axis-label{ font-size:16px; fill:#000; }
+  .pop-bar-label{ font-size:16px; fill:#000; text-anchor:middle; }
+
+  /* ===== AQI ===== */
+  #aqi-content{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  #aqi-class{ font-size:28px; font-weight:800; }
+  #aqi-gauge{ margin-top:2px; }
+  #aqi-value{ font-size:26px; font-weight:800; }
+  #aqi-extra{ margin-top:6px; text-align:center; }
+  #aqi-guidance{ font-size:22px; font-weight:600; color:#222; }
+  #aqi-breakdown{ font-size:18px; color:#222; }
+  #aqi-source{ font-size:16px; color:#444; text-align:right; }
+
+  /* ===== Footer (fixed at bottom) ===== */
+  #footer{
+    position:absolute; left:0; right:0; bottom:8px;
+    text-align:center; font-size:16px; color:#111; padding:0 24px;
+  }
+  </style>
 </head>
 <body>
 <div id="page">
@@ -202,12 +206,12 @@ html, body {
           <div id="aqi-gauge"></div>
           <div id="aqi-value">AQI: --</div>
         </div>
+        <div class="card-timestamp" id="aqi-ts">Last updated: --</div>
         <div id="aqi-extra">
           <div id="aqi-guidance">—</div>
           <div id="aqi-breakdown">—</div>
           <div id="aqi-source">Source: —</div>
         </div>
-        <div class="card-timestamp" id="aqi-ts">Last updated: --</div>
       </div>
 
     </div>
@@ -220,6 +224,31 @@ html, body {
 </div>
 
 <script>
+/* ============================================================
+   DEBUG (toggle logs easily)
+   ============================================================ */
+const DEBUG = false;
+if (DEBUG) {
+  window.addEventListener('error', e =>
+    console.error('[App Error]', e.message || e.error)
+  );
+  window.addEventListener('unhandledrejection', e =>
+    console.error('[Promise Rejection]', e.reason)
+  );
+  const _fetch = window.fetch;
+  window.fetch = function(url, opts){
+    console.log('[fetch]', url);
+    return _fetch(url, opts).then(r=>{
+      console.log('[fetch ok]', url, r.status);
+      return r;
+    }).catch(err=>{
+      console.error('[fetch fail]', url, err);
+      throw err;
+    });
+  };
+  console.log('[Parks 13"] boot');
+}
+
 /* ============================================================
    CONFIG — edit these for the specific site
    ============================================================ */
@@ -251,7 +280,12 @@ const CONFIG = {
 const fmtDT = (d=new Date()) => new Intl.DateTimeFormat('en-US',{dateStyle:'short', timeStyle:'short', timeZone:CONFIG.TIME_ZONE}).format(d);
 const fmtHM = d => new Intl.DateTimeFormat('en-US',{hour:'numeric', minute:'2-digit', hour12:true, timeZone:CONFIG.TIME_ZONE}).format(d);
 
-function hhmmToDate(hhmm){ const [H,M]=hhmm.split(':').map(n=>parseInt(n,10)); const d=new Date(); d.setHours(H,M,0,0); return d; }
+function hhmmToDate(hhmm){
+  const [H,M]=hhmm.split(':').map(n=>parseInt(n,10));
+  const d=new Date();
+  d.setHours(H,M,0,0);
+  return d;
+}
 function mphFromStr(s){ const m=String(s||'').match(/[\d.]+/); return m?parseFloat(m[0]):0; }
 function fToC(f){ return (f-32)*5/9; }
 function dewPointF(Tf,R){ const T=fToC(Tf), Rf=Math.max(1e-6,Math.min(100,R))/100, b=17.62,c=243.12, g=Math.log(Rf)+(b*T)/(c+T); return (c*g)/(b-g)*9/5+32; }
@@ -275,20 +309,41 @@ let latestAlerts = [];
 function twoMinuteIndex(max){ const now=new Date(); const minutesSinceMidnight = now.getHours()*60 + now.getMinutes(); return (Math.floor(minutesSinceMidnight/2)) % Math.max(1,max); }
 async function fetchAlerts(){
   try{
-    const point = await (await fetch(`https://api.weather.gov/points/${CONFIG.LAT},${CONFIG.LON}`)).json();
-    const zoneUrl = point.properties?.forecastZone; if(!zoneUrl) throw new Error('no zone');
+    const pointResp = await fetch(`https://api.weather.gov/points/${CONFIG.LAT},${CONFIG.LON}?_=${Date.now()}`);
+    const point = await pointResp.json();
+    const zoneUrl = point.properties?.forecastZone;
+    if(!zoneUrl) throw new Error('no zone');
     const zone = zoneUrl.split('/').pop();
-    const data = await (await fetch(`https://api.weather.gov/alerts/active/zone/${zone}`)).json();
-    latestAlerts = (data.features||[]).map(f=>{ const p=f.properties||{}; return { title: (p.event || p.headline || 'Alert').toString(), text: (p.description || p.instruction || p.headline || '').toString().trim() }; });
-  }catch(e){ latestAlerts=[]; }
+    const alertsResp = await fetch(`https://api.weather.gov/alerts/active/zone/${zone}?_=${Date.now()}`);
+    const data = await alertsResp.json();
+    latestAlerts = (data.features||[]).map(f=>{
+      const p=f.properties||{};
+      return {
+        title: (p.event || p.headline || 'Alert').toString(),
+        text: (p.description || p.instruction || p.headline || '').toString().trim()
+      };
+    });
+  }catch(e){
+    latestAlerts=[];
+  }
   renderAlert();
 }
 function renderAlert(){
   const msgEl = document.getElementById('alert-message');
   const titlePill = document.getElementById('alert-title-pill');
   const idxPill = document.getElementById('alert-index-pill');
-  if(!latestAlerts.length){ titlePill.textContent='—'; idxPill.textContent='Alert 0 of 0'; msgEl.textContent='No alerts at this time / Sin alertas en este momento'; }
-  else{ const i = twoMinuteIndex(latestAlerts.length); const a = latestAlerts[i]; idxPill.textContent = `Alert ${i+1} of ${latestAlerts.length}`; titlePill.textContent = a.title; const clean = a.text.replace(/\r/g,'').replace(/\n{2,}/g,'\n\n').replace(/\*\s*/g,'• ').trim(); msgEl.textContent = clean || a.title; }
+  if(!latestAlerts.length){
+    titlePill.textContent='—';
+    idxPill.textContent='Alert 0 of 0';
+    msgEl.textContent='No alerts at this time / Sin alertas en este momento';
+  } else {
+    const i = twoMinuteIndex(latestAlerts.length);
+    const a = latestAlerts[i];
+    idxPill.textContent = `Alert ${i+1} of ${latestAlerts.length}`;
+    titlePill.textContent = a.title;
+    const clean = a.text.replace(/\r/g,'').replace(/\n{2,}/g,'\n\n').replace(/\*\s*/g,'• ').trim();
+    msgEl.textContent = clean || a.title;
+  }
   document.getElementById('alerts-ts').textContent='Last updated: '+fmtDT();
 }
 
@@ -307,38 +362,44 @@ function svgIcon(forecast=''){
 
 async function fetchWeather(){
   try{
-    const point = await (await fetch(`https://api.weather.gov/points/${CONFIG.LAT},${CONFIG.LON}`)).json();
+    const pointResp = await fetch(`https://api.weather.gov/points/${CONFIG.LAT},${CONFIG.LON}?_=${Date.now()}`);
+    const point = await pointResp.json();
     const hourlyURL = point.properties?.forecastHourly;
     const rel = point.properties?.relativeLocation?.properties;
     const city=rel?.city||'', state=rel?.state||'';
-    document.getElementById('weather-source').textContent = (city||state) ? `Source: ${city}${city&&state?', ':''}${state}` : 'Source: —';
+    document.getElementById('weather-source').textContent =
+      (city||state) ? `Source: ${city}${city&&state?', ':''}${state}` : 'Source: —';
 
     // Hourly now
-    const hourly = await (await fetch(hourlyURL)).json();
-    const nowP = hourly.properties?.periods?.[0];
-    if(nowP){
-      const tempF = Number(nowP.temperature);
-      const rhVal = Number(nowP.relativeHumidity?.value);
-      const windS = nowP.windSpeed || '0 mph';
-      const windV = mphFromStr(windS);
-      document.getElementById('tempF').textContent = `${Math.round(tempF)}°F`;
-      document.getElementById('tempC').textContent = `${fToC(tempF).toFixed(1)}°C`;
-      document.getElementById('short-forecast').textContent = nowP.shortForecast || '—';
-      document.getElementById('wind-line').textContent = `Wind: ${windS}`;
-      document.getElementById('humidity-line').textContent = `Humidity: ${Number.isFinite(rhVal)?Math.round(rhVal):'—'}%`;
-      document.getElementById('weather-icon').innerHTML = svgIcon(nowP.shortForecast || '');
+    if (hourlyURL) {
+      const hourlyResp = await fetch(`${hourlyURL}?_=${Date.now()}`);
+      const hourly = await hourlyResp.json();
+      const nowP = hourly.properties?.periods?.[0];
+      if(nowP){
+        const tempF = Number(nowP.temperature);
+        const rhVal = Number(nowP.relativeHumidity?.value);
+        const windS = nowP.windSpeed || '0 mph';
+        const windV = mphFromStr(windS);
+        document.getElementById('tempF').textContent = `${Math.round(tempF)}°F`;
+        document.getElementById('tempC').textContent = `${fToC(tempF).toFixed(1)}°C`;
+        document.getElementById('short-forecast').textContent = nowP.shortForecast || '—';
+        document.getElementById('wind-line').textContent = `Wind: ${windS}`;
+        document.getElementById('humidity-line').textContent = `Humidity: ${Number.isFinite(rhVal)?Math.round(rhVal):'—'}%`;
+        document.getElementById('weather-icon').innerHTML = svgIcon(nowP.shortForecast || '');
 
-      if(Number.isFinite(tempF) && Number.isFinite(rhVal)){
-        const feels = Math.round(feelsLikeF(tempF, rhVal, windV));
-        const dew = Math.round(dewPointF(tempF, rhVal));
-        document.getElementById('feelslike-line').textContent = `Feels like: ${feels}°F`;
-        document.getElementById('dewpoint-line').textContent = `Dew point: ${dew}°F`;
+        if(Number.isFinite(tempF) && Number.isFinite(rhVal)){
+          const feels = Math.round(feelsLikeF(tempF, rhVal, windV));
+          const dew = Math.round(dewPointF(tempF, rhVal));
+          document.getElementById('feelslike-line').textContent = `Feels like: ${feels}°F`;
+          document.getElementById('dewpoint-line').textContent = `Dew point: ${dew}°F`;
+        }
+        drawPoP(hourly.properties?.periods || []);
       }
-      drawPoP(hourly.properties?.periods || []);
     }
 
     // Sunrise/Sunset
-    const rises = await (await fetch(`https://api.sunrise-sunset.org/json?lat=${CONFIG.LAT}&lng=${CONFIG.LON}&formatted=0`)).json();
+    const risesResp = await fetch(`https://api.sunrise-sunset.org/json?lat=${CONFIG.LAT}&lng=${CONFIG.LON}&formatted=0&_=${Date.now()}`);
+    const rises = await risesResp.json();
     if(rises.status==="OK"){
       const sR=new Date(rises.results.sunrise), sS=new Date(rises.results.sunset);
       document.getElementById('sunrise-line').textContent = `Sunrise: ${fmtHM(sR)}`;
@@ -347,7 +408,8 @@ async function fetchWeather(){
 
     // UV (Open-Meteo)
     try{
-      const uv = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.LAT}&longitude=${CONFIG.LON}&hourly=uv_index&timezone=auto&_=${Date.now()}`)).json();
+      const uvResp = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.LAT}&longitude=${CONFIG.LON}&hourly=uv_index&timezone=auto&_=${Date.now()}`);
+      const uv = await uvResp.json();
       const t=uv?.hourly?.time||[], u=uv?.hourly?.uv_index||[];
       if(t.length && u.length){
         const now=new Date(); let idx=t.length-1; for(let i=t.length-1;i>=0;i--){ if(new Date(t[i])<=now){ idx=i; break; } }
@@ -375,7 +437,7 @@ function drawPoP(periods){
   const list = []; const now = new Date();
   for(const p of (periods||[])){
     const t=new Date(p.startTime||p.startTimeISO||p.validTime?.split('/')[0]||new Date());
-    if(t>=now && list.length<24){ 
+    if(t>=now && list.length<24){
       const pop = Number(p.probabilityOfPrecipitation?.value ?? p.pop ?? 0) || 0;
       list.push({t, pop: Math.max(0, Math.min(100, Math.round(pop)))});
     }
@@ -464,7 +526,9 @@ async function fetchAQI(){
     document.getElementById('aqi-breakdown').textContent=`PM2.5 ${fmt(p25[idx])} µg/m³ • PM10 ${fmt(p10[idx])} µg/m³ • O₃ ${fmt(o3[idx])} µg/m³`;
     document.getElementById('aqi-source').textContent=`Source: Open-Meteo (US AQI) • As of ${fmtDT(new Date(t[idx]))}`;
     document.getElementById('aqi-ts').textContent='Last updated: '+fmtDT();
-  }catch(e){ document.getElementById('aqi-ts').textContent='Last updated: '+fmtDT(); }
+  }catch(e){
+    document.getElementById('aqi-ts').textContent='Last updated: '+fmtDT();
+  }
 }
 
 /* ================== Fit / rotation: keep footer visible ================== */
@@ -472,14 +536,25 @@ function fitAndRotate(){
   const cont = document.getElementById('cards');
   Array.from(cont.children).forEach(sec=>sec.style.display='');
   const optionals = Array.from(cont.children).filter(s=>s.dataset.required!=="1");
-  if(optionals.length){ const start = twoMinuteIndex(optionals.length); const ordered = optionals.slice(start).concat(optionals.slice(0,start)); ordered.forEach(sec=>cont.appendChild(sec)); }
+  if(optionals.length){
+    const start = twoMinuteIndex(optionals.length);
+    const ordered = optionals.slice(start).concat(optionals.slice(0,start));
+    ordered.forEach(sec=>cont.appendChild(sec));
+  }
   const maxH = 1600 - 8 /*footer bottom*/ - 20 /*footer pad*/ - 20 /*buffer*/;
   let used = document.getElementById('header').offsetHeight + 24 /*top pad*/;
   const children = Array.from(cont.children);
   for(const sec of children){
     sec.style.display='';
     used += sec.offsetHeight + 12;
-    if(used > maxH){ let hide=false; for(const s of children){ if(s===sec) hide=true; if(hide && s.dataset.required!=="1") s.style.display='none'; } break; }
+    if(used > maxH){
+      let hide=false;
+      for(const s of children){
+        if(s===sec) hide=true;
+        if(hide && s.dataset.required!=="1") s.style.display='none';
+      }
+      break;
+    }
   }
 }
 
