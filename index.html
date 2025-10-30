@@ -566,7 +566,7 @@ async function refreshAll(){
 }
 
 window.onload = refreshAll;
-setInterval(refreshAll, 2*60*1000);          // data every 2 min
+setInterval(refreshAll, 1*60*1000);          // data every 1 min
 setInterval(()=>{ renderAlert(); fitAndRotate(); }, 60*1000); // layout rotation every 60s
 </script>
 </body>
